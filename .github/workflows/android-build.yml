@@ -1,4 +1,4 @@
-name: Android Build
+name: Android Build (Debug Test)
 
 on:
   workflow_dispatch:
@@ -11,6 +11,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Show folder structure
+        run: ls -R
+
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
@@ -22,18 +25,18 @@ jobs:
         with:
           flutter-version: '3.22.0'
 
-      - name: Verify Flutter Installation
+      - name: Verify Flutter installation
         run: flutter --version
 
-      - name: Get Flutter dependencies
+      - name: Get dependencies
         run: flutter pub get
         working-directory: app
 
-      - name: Build release APK
+      - name: Build APK
         run: flutter build apk --release
         working-directory: app
 
-      - name: Upload release APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Ali_PSX_Scanner
