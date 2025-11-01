@@ -22,13 +22,16 @@ jobs:
         with:
           flutter-version: '3.22.0'
 
+      - name: Verify Flutter Installation
+        run: flutter --version
+
       - name: Get Flutter dependencies
-        working-directory: ./app
         run: flutter pub get
+        working-directory: app
 
       - name: Build release APK
-        working-directory: ./app
         run: flutter build apk --release
+        working-directory: app
 
       - name: Upload release APK
         uses: actions/upload-artifact@v4
