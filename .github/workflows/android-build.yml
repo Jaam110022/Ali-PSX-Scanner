@@ -1,4 +1,4 @@
-name: Android Build (Debug Test)
+name: Android Build
 
 on:
   workflow_dispatch:
@@ -11,30 +11,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Show folder structure
-        run: ls -R
-
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version: '17'
-
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.0'
 
-      - name: Verify Flutter installation
-        run: flutter --version
+      - name: Check structure
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Listing contents:"
+          ls -R
 
-      - name: Get dependencies
-        run: flutter pub get
-        working-directory: app
-
-      - name: Build APK
-        run: flutter build apk --release
-        working-directory: app
+      - name: Move into app folder
+        run: cd app && flutter clean && flutter pub get && flutter build apk --release
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
